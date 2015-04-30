@@ -1,0 +1,42 @@
+<Shader name="backgroundShader" autoinit="true" autobind="true">
+    <VertexShader>
+        <Attrib name="a_vertex" type="vec3" index="0" />
+        <Attrib name="a_texcoord" type="vec2" index="1" />
+        <Attrib name="a_normal" type="vec3" index="2" />
+        <Raw>
+            #version 130
+
+            uniform mat4 projectionMatrix;
+            uniform mat4 modelviewMatrix;
+
+            in vec3 a_vertex;
+            in vec2 a_texcoord;
+            in vec3 a_normal;
+
+            out vec3 v_ray;
+
+            void main(void)
+            {
+                v_ray = normalize(a_vertex);
+                gl_Position = projectionMatrix * modelviewMatrix * vec4(a_vertex, 1.0);
+            }
+        </Raw>
+    </VertexShader>
+    <FragmentShader>
+        <Raw>
+            #version 130
+
+            uniform samplerCube u_cubemap;
+
+            in vec3 v_ray;
+
+            out vec4 fragColor;
+
+            void main(void)
+            {
+                fragColor = texture(u_cubemap, normalize(v_ray));
+                //fragColor = vec4(1.0, 0.0, 0.0, 1.0);
+            }
+        </Raw>
+    </FragmentShader>
+</Shader>

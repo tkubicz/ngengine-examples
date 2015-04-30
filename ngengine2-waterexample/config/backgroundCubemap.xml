@@ -1,0 +1,12 @@
+<!-- Tekstury -->
+<TextureCubeMap name="backgroundCubemap" type="tga">
+    <Texture target="positive_x" file="water_pos_x.tga" />
+    <Texture target="negative_x" file="water_neg_x.tga" />
+    <Texture target="positive_y" file="water_pos_y.tga" />
+    <Texture target="negative_y" file="water_neg_y.tga" />
+    <Texture target="positive_z" file="water_pos_z.tga" />
+    <Texture target="negative_z" file="water_neg_z.tga" />
+    <Wrap s="LINEAR" t="LINEAR" />
+    <Filter min="CLAMP_TO_EDGE" mag="CLAMP_TO_EDGE" />
+    <Format internal="RGB" format="RGB" />
+</TextureCubeMap>
