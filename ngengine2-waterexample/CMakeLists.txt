@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project (nge2-waterexample)
+project (nge-waterexample)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-g -std=c++11 -pthread -Wall)
@@ -10,8 +10,8 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 
 MESSAGE (STATUS "PROJECT BINARY DIR: " ${PROJECT_BINARY_DIR})
 
-include_directories("${PROJECT_SOURCE_DIR}/../ngengine2/source/include/")
-add_subdirectory (../ngengine2 subproject/nge2)
+include_directories("${PROJECT_SOURCE_DIR}/../../ngengine/source/include/")
+add_subdirectory (../../ngengine subproject/nge2)
 
 set (CMAKE_INSTALL_PREFIX "../install")
 
@@ -25,13 +25,13 @@ set (EXTRA_LIBS ${EXTRA_LIBS} z)
 MESSAGE(STATUS "Libs: " ${EXTRA_LIBS})
 
 # Add the executables
-add_executable(nge2-waterexample 
+add_executable(nge-waterexample 
 	src/Background.cpp
 	#src/Water.cpp
 	src/WaterExample.cpp
 	src/WaterTexture.cpp
 	src/main.cpp)
 
-target_link_libraries(nge2-waterexample ${EXTRA_LIBS})
+target_link_libraries(nge-waterexample ${EXTRA_LIBS})
 
-install (TARGETS nge2-waterexample DESTINATION bin)
+install (TARGETS nge-waterexample DESTINATION bin)
