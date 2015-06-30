@@ -11,11 +11,11 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 MESSAGE (STATUS "PROJECT BINARY DIR: " ${PROJECT_BINARY_DIR})
 
 include_directories("${PROJECT_SOURCE_DIR}/../../ngengine/source/include/")
-add_subdirectory (../../ngengine subproject/nge2)
+add_subdirectory (../../ngengine subproject/nge)
 
 set (CMAKE_INSTALL_PREFIX "../install")
 
-set (EXTRA_LIBS ${EXTRA_LIBS} nge2)
+set (EXTRA_LIBS ${EXTRA_LIBS} nge)
 set (EXTRA_LIBS ${EXTRA_LIBS} GL)
 set (EXTRA_LIBS ${EXTRA_LIBS} GLU)
 set (EXTRA_LIBS ${EXTRA_LIBS} GLEW)
