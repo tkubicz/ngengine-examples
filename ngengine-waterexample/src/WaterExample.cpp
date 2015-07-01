@@ -12,19 +12,19 @@ WaterExample::~WaterExample() { }
 
 bool WaterExample::Init()
 {
-    Media::MediaManager::GetInstance().GetShaderManager().LoadProgram("waterTextureShader", "waterTexture.xml");
-    Media::MediaManager::GetInstance().GetShaderManager().LoadProgram("waterShader", "water.xml");
+    Media::MediaManager::getInstance().getShaderManager().loadProgram("waterTextureShader", "waterTexture.xml");
+    Media::MediaManager::getInstance().getShaderManager().loadProgram("waterShader", "water.xml");
 
-    waterShader = Media::MediaManager::GetInstance().GetShaderManager().GetProgram("waterShader");
+    waterShader = Media::MediaManager::getInstance().getShaderManager().getProgram("waterShader");
 
     camera.Set(0.0f, 1.0f, 0.0f, 50.0f, 5.0f, 22.0f, 0.0f, 1.0f, 0.0f);
 
     CreateGeometry();
     background.Initialize(64, (waterPlaneLength / 2.0f) + 0.5f);
 
-    waterTexture.SetShader(Media::MediaManager::GetInstance().GetShaderManager().GetProgram("waterTextureShader"));
+    waterTexture.SetShader(Media::MediaManager::getInstance().getShaderManager().getProgram("waterTextureShader"));
     unsigned int waterTextureId = waterTexture.Initialise((float) waterPlaneLength);
-    tex.SetID(waterTextureId);
+    tex.setID(waterTextureId);
     waterTexture.Resize(this->GetWindow()->GetWidth(), this->GetWindow()->GetHeight());
 
     glEnable(GL_DEPTH_TEST);
@@ -63,7 +63,7 @@ void WaterExample::Render()
 
 void WaterExample::Shutdown()
 {
-    Media::MediaManager::GetInstance().GetShaderManager().Deinitialize();
+    Media::MediaManager::getInstance().getShaderManager().deinitialize();
 }
 
 void WaterExample::OnResize(int width, int height)
@@ -207,29 +207,29 @@ void WaterExample::RenderWater()
     waveDirections[3].x = -0.2f;
     waveDirections[3].z = -0.1f;
 
-    waterShader->BindShader();
+    waterShader->bindShader();
 
-    waterShader->SendUniform4x4("projectionMatrix", Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(PROJECTION_MATRIX));
-    waterShader->SendUniform4x4("viewMatrix", Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(MODELVIEW_MATRIX));
+    waterShader->sendUniform4x4("projectionMatrix", Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(PROJECTION_MATRIX));
+    waterShader->sendUniform4x4("viewMatrix", Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(MODELVIEW_MATRIX));
 
     NGE::Math::mat4f inverseViewMatrix = Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(MODELVIEW_MATRIX);
     inverseViewMatrix.SetInverseRigidBody();
-    waterShader->SendUniform3x3("inverseViewNormalMatrix", inverseViewMatrix.ExtractMatrix3());
+    waterShader->sendUniform3x3("inverseViewNormalMatrix", inverseViewMatrix.ExtractMatrix3());
     
-    waterShader->SendUniform("waterPlaneLength", (float) waterPlaneLength);
+    waterShader->sendUniform("waterPlaneLength", (float) waterPlaneLength);
     
-    waterShader->SendUniform("passedTime", passedTime);
+    waterShader->sendUniform("passedTime", passedTime);
 
-    waterShader->SendUniformArray4("waveParameters", 4 * numberWaves, (GLfloat*) waveParameters);
-    waterShader->SendUniformArray2("waveDirections", 2 * numberWaves, (GLfloat*) waveDirections);
+    waterShader->sendUniformArray4("waveParameters", 4 * numberWaves, (GLfloat*) waveParameters);
+    waterShader->sendUniformArray2("waveDirections", 2 * numberWaves, (GLfloat*) waveDirections);
     
-    Media::MediaManager::GetInstance().GetTextureManager().GetTexture("backgroundCubemap")->Activate(0);
-    waterShader->SendUniform("cubemap", 0);
+    Media::MediaManager::getInstance().getTextureManager().getTexture("backgroundCubemap")->activate(0);
+    waterShader->sendUniform("cubemap", 0);
     
-    tex.Activate(1);
-    waterShader->SendUniform("waterTexture", 1);
+    tex.activate(1);
+    waterShader->sendUniform("waterTexture", 1);
     
-    waterShader->SendUniform("cameraPos", camera.GetViewerPosition());
+    waterShader->sendUniform("cameraPos", camera.GetViewerPosition());
 
     glBindVertexArray(va);
 

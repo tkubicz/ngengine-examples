@@ -43,7 +43,7 @@ int main()
         return 1;
     }
 
-    MediaManager::GetInstance().GetMediaPathManager().LoadXMLSettings(doc.child("Config"));
+    MediaManager::getInstance().getMediaPathManager().loadXMLSettings(doc.child("Config"));
 
     if (!programWindow.Create())
     {
@@ -88,7 +88,7 @@ int main()
     Logger::Flush();
     app.Shutdown();
 
-    MediaManager::GetInstance().Deinitialize();
+    MediaManager::getInstance().deinitialize();
     Renderer::GetInstance().GetMatrixStack().Deinitialize();
 
     programWindow.Destroy();

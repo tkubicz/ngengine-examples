@@ -170,21 +170,21 @@ void WaterTexture::Render()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    shader->BindShader();
+    shader->bindShader();
     
     NGE::Math::mat4f modelviewMatrix;
     modelviewMatrix.LookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    shader->SendUniform4x4("modelviewMatrix", modelviewMatrix);
+    shader->sendUniform4x4("modelviewMatrix", modelviewMatrix);
 
     NGE::Math::mat4f projectionMatrix;
     projectionMatrix.SetOrthographicProjection(-(float) textureSize / 2, (float) textureSize / 2, -(float) textureSize / 2, (float) textureSize / 2, 1.0f, 100.0f);
-    shader->SendUniform4x4("projectionMatrix", projectionMatrix);
+    shader->sendUniform4x4("projectionMatrix", projectionMatrix);
 
-    shader->SendUniform("waterPlaneLength", waterPlaneLength);
+    shader->sendUniform("waterPlaneLength", waterPlaneLength);
 
-    shader->SendUniform("passedTime", passedTime);
-    shader->SendUniformArray4("waveParameters", 4 * numberWaves, (float*) waveParameters);
-    shader->SendUniformArray2("waveDirections", 2 * numberWaves, (float*) waveDirections);
+    shader->sendUniform("passedTime", passedTime);
+    shader->sendUniformArray4("waveParameters", 4 * numberWaves, (float*) waveParameters);
+    shader->sendUniformArray2("waveDirections", 2 * numberWaves, (float*) waveDirections);
 
     glFrontFace(GL_CCW);
 

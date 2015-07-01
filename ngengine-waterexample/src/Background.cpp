@@ -5,26 +5,26 @@
 bool Background::Initialize(int slices, float radius)
 {
     // Load background shader.
-    NGE::Media::MediaManager::GetInstance().GetShaderManager().LoadProgram("backgroundShader", "background.xml");
+    NGE::Media::MediaManager::getInstance().getShaderManager().loadProgram("backgroundShader", "background.xml");
 
     // Initialize the sphere.
-    NGE::Geometry::Basic::Sphere::Initialize(slices, radius, NGE::Media::MediaManager::GetInstance().GetShaderManager().GetProgram("backgroundShader"));
+    NGE::Geometry::Basic::Sphere::Initialize(slices, radius, NGE::Media::MediaManager::getInstance().getShaderManager().getProgram("backgroundShader"));
 
     // Create the background cubemap from XML description file.
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file("config/backgroundCubemap.xml");
     pugi::xml_node cubeMap = doc.child("TextureCubeMap");
-    NGE::Media::MediaManager::GetInstance().GetTextureManager().LoadTexture(cubeMap);
+    NGE::Media::MediaManager::getInstance().getTextureManager().loadTexture(cubeMap);
 
-    this->texture = NGE::Media::MediaManager::GetInstance().GetTextureManager().GetTexture("backgroundCubemap");
+    this->texture = NGE::Media::MediaManager::getInstance().getTextureManager().getTexture("backgroundCubemap");
 
     // Bind cubemap to the shader.
-    shader->BindShader();
+    shader->bindShader();
     {
-        texture->Activate(0);
-        shader->SendUniform("u_cubemap", 0);
+        texture->activate(0);
+        shader->sendUniform("u_cubemap", 0);
     }
-    shader->UnbindShader();
+    shader->unbindShader();
 
     return true;
 }
@@ -38,11 +38,11 @@ void Background::Render()
     // we want to see the back of it.
     glFrontFace(GL_CW);
 
-    shader->BindShader();
+    shader->bindShader();
     {
         // Send modelview and projection matrix to the shader.
-        shader->SendUniform4x4("modelviewMatrix", NGE::Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(NGE::MODELVIEW_MATRIX));
-        shader->SendUniform4x4("projectionMatrix", NGE::Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(NGE::PROJECTION_MATRIX));
+        shader->sendUniform4x4("modelviewMatrix", NGE::Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(NGE::MODELVIEW_MATRIX));
+        shader->sendUniform4x4("projectionMatrix", NGE::Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(NGE::PROJECTION_MATRIX));
 
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         
@@ -55,6 +55,6 @@ void Background::Render()
         
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
-    shader->UnbindShader();
+    shader->unbindShader();
 }
 
