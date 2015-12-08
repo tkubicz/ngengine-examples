@@ -2,7 +2,7 @@ stages:
   - build
 
 before_script:
-  - echo $SSH_PRIVATE_KEY > ~/.ssh/id_rsa
+  - echo $SSH_KEY_NGENGINE > ~/.ssh/id_rsa
   - git submodule update --init 
 
 build:
