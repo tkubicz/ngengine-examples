@@ -1,0 +1,10 @@
+stages:
+  - build
+
+build:
+  stage: build
+  script:
+    - git clone git@gitlab.com:lynxware/ngengine.git ../ngengine
+    - mkdir build/
+    - cmake ..
+    - make
