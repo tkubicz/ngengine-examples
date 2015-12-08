@@ -1,13 +1,11 @@
 stages:
   - build
 
-before_script:
-  - echo $SSH_KEY_NGENGINE > ~/.ssh/id_rsa
-  - git submodule update --init 
-
 build:
   stage: build
   script:
+    - echo $SSH_KEY_NGENGINE > ~/.ssh/id_rsa
+    - git submodule update --init 
     - git clone git@gitlab.com:lynxware/ngengine.git ../ngengine
     - mkdir build/
     - cmake ..
