@@ -4,7 +4,7 @@ stages:
 build:
   stage: build
   script:
-    - echo $SSH_KEY_NGENGINE > ~/.ssh/id_rsa
+    - echo -e $SSH_KEY_NGENGINE > ~/.ssh/id_rsa
     - echo -e "Host gitlab.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
     - cat ~/.ssh/id_rsa
     - git clone git@gitlab.com:lynxware/ngengine.git ../ngengine
