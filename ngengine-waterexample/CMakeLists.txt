@@ -11,6 +11,8 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 MESSAGE (STATUS "PROJECT BINARY DIR: " ${PROJECT_BINARY_DIR})
 
 include_directories("${PROJECT_SOURCE_DIR}/../../ngengine/source/include/")
+include_directories("${PROJECT_SOURCE_DIR}/../../ngengine/thirdparty/kaguya/include/")
+include_directories("${PROJECT_SOURCE_DIR}/../../ngengine/thirdparty/pugixml/src/")
 add_subdirectory (../../ngengine subproject/nge)
 
 set (CMAKE_INSTALL_PREFIX "../install")
