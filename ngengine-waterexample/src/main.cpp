@@ -69,14 +69,16 @@ int main()
         return 1;
     }
 
-    Timing::Initialize();
+	Timing& timing = Timing::GetInstance();
+	
+    timing.Initialize();
     programWindow.SetInputCallbacks();
     app.OnResize(programWindow.GetWidth(), programWindow.GetHeight());
 
     while (programWindow.IsRunning())
     {
-        Timing::Update();
-        float elapsedTime = static_cast<float> (Timing::Get().lastFrameDuration);
+        timing.Update();
+        float elapsedTime = static_cast<float> (timing.GetLastFrameDuration());
 
         app.Prepare(elapsedTime);
         app.Render();
