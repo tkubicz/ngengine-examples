@@ -13,6 +13,7 @@ MESSAGE (STATUS "PROJECT BINARY DIR: " ${PROJECT_BINARY_DIR})
 include_directories("${PROJECT_SOURCE_DIR}/../../ngengine/source/include/")
 include_directories("${PROJECT_SOURCE_DIR}/../../ngengine/thirdparty/kaguya/include/")
 include_directories("${PROJECT_SOURCE_DIR}/../../ngengine/thirdparty/pugixml/src/")
+include_directories("${PROJECT_SOURCE_DIR}/../../ngengine/thirdparty/cppformat/")
 add_subdirectory (../../ngengine subproject/nge)
 
 set (CMAKE_INSTALL_PREFIX "../install")
@@ -24,6 +25,7 @@ set (EXTRA_LIBS ${EXTRA_LIBS} GLEW)
 set (EXTRA_LIBS ${EXTRA_LIBS} glfw)
 set (EXTRA_LIBS ${EXTRA_LIBS} z)
 set (EXTRA_LIBS ${EXTRA_LIBS} lua5.2)
+set (EXTRA_LIBS ${EXTRA_LIBS} cppformat)
 
 MESSAGE(STATUS "Libs: " ${EXTRA_LIBS})
 
@@ -36,5 +38,6 @@ add_executable(nge-waterexample
 	src/main.cpp)
 
 target_link_libraries(nge-waterexample ${EXTRA_LIBS})
+
 
 install (TARGETS nge-waterexample DESTINATION bin)

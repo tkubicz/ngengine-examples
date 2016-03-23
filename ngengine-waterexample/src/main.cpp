@@ -21,11 +21,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 int main()
 #endif
 {
-    Logger::Initialize("log.txt", true);
+    Logger::NewLogger& log = Logger::NewLogger::GetInstance();
+    
+    log.GetOutputs()["file"]->SetEnabled(true);
+    log.GetOutputs()["console"]->SetEnabled(true);
 
-    if (!glfwInit())
-    {
-        Logger::WriteFatalErrorLog("Error starting GLFW");
+    if (!glfwInit()) {
+        log_error("Error starting GLFW");
         return 1;
     }
 
@@ -37,24 +39,21 @@ int main()
     pugi::xml_parse_result result = doc.load_file("config/config.xml");
     pugi::xml_node window = doc.child("Window");
 
-    if (!programWindow.LoadXMLSettings(window))
-    {
-        Logger::WriteFatalErrorLog("Unable to load window settings");
+    if (!programWindow.LoadXMLSettings(window)) {
+        log_error("Unable to load window settings");
         return 1;
     }
 
     MediaManager::getInstance().getMediaPathManager().loadXMLSettings(doc.child("Config"));
 
-    if (!programWindow.Create())
-    {
-        Logger::WriteFatalErrorLog("Unable to create OpenGL window");
+    if (!programWindow.Create()) {
+        log_error("Unable to create OpenGL window");
         programWindow.Destroy();
         return 1;
     }
 
-    if (!programWindow.Init())
-    {
-        Logger::WriteFatalErrorLog("Could not initialize GLEW");
+    if (!programWindow.Init()) {
+        log_error("Could not initialise GLEW");
         programWindow.Destroy();
         return 1;
     }
@@ -62,21 +61,19 @@ int main()
     Renderer::GetInstance().GetRendererInformation();
     Renderer::GetInstance().GetMatrixStack().Initialize();
 
-    if (!app.Init())
-    {
-        Logger::WriteFatalErrorLog("Could not initialise application");
+    if (!app.Init()) {
+        log_error("Could not initialise application");
         programWindow.Destroy();
         return 1;
     }
 
-	Timing& timing = Timing::GetInstance();
-	
+    Timing& timing = Timing::GetInstance();
+
     timing.Initialize();
     programWindow.SetInputCallbacks();
     app.OnResize(programWindow.GetWidth(), programWindow.GetHeight());
 
-    while (programWindow.IsRunning())
-    {
+    while (programWindow.IsRunning()) {
         timing.Update();
         float elapsedTime = static_cast<float> (timing.GetLastFrameDuration());
 
@@ -87,7 +84,7 @@ int main()
         programWindow.ProcessEvents();
     }
 
-    Logger::Flush();
+    Logger::NewLogger::GetInstance().Flush();
     app.Shutdown();
 
     MediaManager::getInstance().deinitialize();
