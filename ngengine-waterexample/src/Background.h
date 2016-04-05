@@ -6,27 +6,30 @@
  */
 
 #ifndef BACKGROUND_H
-#define	BACKGROUND_H
+#define BACKGROUND_H
 
 #include "NGE/Geometry/Basic/Sphere.hpp"
+#include <NGE/Media/Images/LoadTextureEvent.hpp>
 
-class Background : public NGE::Geometry::Basic::Sphere
-{
+class Background : public NGE::Geometry::Basic::Sphere {
+  private:
+	std::shared_ptr<NGE::Media::Images::LoadTextureEvent> loadTextureEvent;
+
   public:
-    /**
-     * Initialize the background sphere. This method loads necessary data and
-     * assets.
-     * @param slices Number of sphere slices.
-     * @param radius Radius of the sphere.
-     * @return True if everything went ok, otherwise false.
-     */
-    virtual bool Initialize(int slices, float radius);
-    
-    /**
-     * Render the background (sphere).
-     */
-    virtual void Render();
+	/**
+	 * Initialize the background sphere. This method loads necessary data and
+	 * assets.
+	 * @param slices Number of sphere slices.
+	 * @param radius Radius of the sphere.
+	 * @return True if everything went ok, otherwise false.
+	 */
+	virtual bool Initialize(int slices, float radius);
+
+	/**
+	 * Render the background (sphere).
+	 */
+	virtual void Render();
 };
 
-#endif	/* BACKGROUND_H */
+#endif /* BACKGROUND_H */
 
