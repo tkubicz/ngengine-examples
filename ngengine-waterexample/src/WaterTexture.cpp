@@ -6,7 +6,7 @@
  */
 
 #include "WaterTexture.h"
-#include <NGE/Tools/Logger.hpp>
+#include <NGE/Tools/Logger/NewLogger.hpp>
 #include <NGE/Math/Math.hpp>
 #include <GL/glew.h>
 
