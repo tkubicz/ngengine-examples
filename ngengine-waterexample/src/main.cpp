@@ -23,7 +23,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 int main()
 #endif
 {
-	Logger::NewLogger& log = Logger::NewLogger::GetInstance();
+    Logger::NewLogger& log = Logger::NewLogger::GetInstance();
+    log["console"]->SetAutoFlushEnabled(true);
+    log["console"]->SetFlushAfter(1);
+    
 
 	log.GetOutputs()["file"]->SetEnabled(true);
 	log.GetOutputs()["console"]->SetEnabled(true);
@@ -31,7 +34,10 @@ int main()
 	log.SetAutoFlushEnabled(true);
 	log.SetFlushAfter(1);
 
-	log_info("Starting application ngengine-waterexample");
+    if (!glfwInit()) {
+        log_error("Error starting GLFW");
+        return 1;
+    }
 
 	log_debug("Initialising GLFW");
 	if (!glfwInit()) {
@@ -39,13 +45,14 @@ int main()
 		return 1;
 	}
 
-	WaterExample app;
-	GLFW3Window programWindow;
-	programWindow.SetApplication(&app);
+    pugi::xml_document doc;
+    pugi::xml_parse_result result = doc.load_file("config/config.xml");
+    pugi::xml_node window = doc.child("Window");
 
-	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file("config/config.xml");
-	pugi::xml_node window = doc.child("Window");
+    if (!programWindow.LoadXMLSettings(window)) {
+        log_error("Unable to load window settings");
+        return 1;
+    }
 
 	log_debug("Loading window settings");
 	if (!programWindow.LoadXMLSettings(window)) {
@@ -69,8 +76,11 @@ int main()
 		return 1;
 	}
 
-	Renderer::GetInstance().GetRendererInformation();
-	Renderer::GetInstance().GetMatrixStack().Initialize();
+    if (!app.Init()) {
+        log_error("Could not initialise application");
+        programWindow.Destroy();
+        return 1;
+    }
 
 	log_debug("Initialising application");
 	if (!app.Init()) {
@@ -82,31 +92,29 @@ int main()
 	Timing& timing = Timing::GetInstance();
 	EventManager& eventManager = EventManager::GetInstance();
 
-	timing.Initialize();
-	programWindow.SetInputCallbacks();
-	app.OnResize(programWindow.GetWidth(), programWindow.GetHeight());
+    while (programWindow.IsRunning()) {
+        timing.Update();
+        float elapsedTime = static_cast<float> (timing.GetLastFrameDuration());
 
 	while (programWindow.IsRunning()) {
 		timing.Update();
 		float elapsedTime = static_cast<float> (timing.GetLastFrameDuration());
 		eventManager.UpdateAll(1000);
 
-		app.Prepare(elapsedTime);
-		app.Render();
+        programWindow.SwapBuffers();
+        programWindow.ProcessEvents();
+    }
 
-		programWindow.SwapBuffers();
-		programWindow.ProcessEvents();
-	}
+    log_info("Stopping application ngengine-waterexample\n");
 
-	log_info("Stopping application ngengine-waterexample\n");
+    Logger::NewLogger::GetInstance().Flush();
+    app.Shutdown();
 
-	Logger::NewLogger::GetInstance().Flush();
-	app.Shutdown();
+    MediaManager::getInstance().deinitialize();
+    Renderer::GetInstance().GetMatrixStack().Deinitialize();
 
 	MediaManager::GetInstance().deinitialize();
 	Renderer::GetInstance().GetMatrixStack().Deinitialize();
 
-	programWindow.Destroy();
-
-	return 0;
+    return 0;
 }
