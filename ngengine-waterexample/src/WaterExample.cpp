@@ -15,17 +15,17 @@ bool WaterExample::Init() {
 	Media::MediaManager::GetInstance().initialize();
 
 	log_debug("Loading shaders");
-	Media::MediaManager::GetInstance().getShaderManager().loadProgram("waterTextureShader", "waterTexture.xml");
-	Media::MediaManager::GetInstance().getShaderManager().loadProgram("waterShader", "water.xml");
+	Media::MediaManager::GetInstance().GetShaderManager().LoadProgram("waterTextureShader", "waterTexture.xml");
+	Media::MediaManager::GetInstance().GetShaderManager().LoadProgram("waterShader", "water.xml");
 
-	waterShader = Media::MediaManager::GetInstance().getShaderManager().getProgram("waterShader");
+	waterShader = Media::MediaManager::GetInstance().GetShaderManager().GetProgram("waterShader");
 
 	camera.Set(0.0f, 1.0f, 0.0f, 50.0f, 5.0f, 22.0f, 0.0f, 1.0f, 0.0f);
 
 	CreateGeometry();
 	background.Initialize(64, (waterPlaneLength / 2.0f) + 0.5f);
 
-	waterTexture.SetShader(Media::MediaManager::GetInstance().getShaderManager().getProgram("waterTextureShader"));
+	waterTexture.SetShader(Media::MediaManager::GetInstance().GetShaderManager().GetProgram("waterTextureShader"));
 	unsigned int waterTextureId = waterTexture.Initialise((float) waterPlaneLength);
 	tex.setID(waterTextureId);
 	waterTexture.Resize(this->GetWindow()->GetWidth(), this->GetWindow()->GetHeight());
@@ -63,7 +63,7 @@ void WaterExample::Render() {
 }
 
 void WaterExample::Shutdown() {
-	Media::MediaManager::GetInstance().getShaderManager().deinitialize();
+	Media::MediaManager::GetInstance().GetShaderManager().Deinitialise();
 }
 
 void WaterExample::OnResize(int width, int height) {

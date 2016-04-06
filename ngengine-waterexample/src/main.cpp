@@ -25,25 +25,18 @@ int main()
 {
     Logger::NewLogger& log = Logger::NewLogger::GetInstance();
     log["console"]->SetAutoFlushEnabled(true);
-    log["console"]->SetFlushAfter(1);
-    
+    log["console"]->SetFlushAfter(10);
 
-	log.GetOutputs()["file"]->SetEnabled(true);
-	log.GetOutputs()["console"]->SetEnabled(true);
-	log.SetLogLevel(Logger::LogTypes::LOG_LEVEL::TRACE);
-	log.SetAutoFlushEnabled(true);
-	log.SetFlushAfter(1);
+    log_info("Starting application ngengine-waterexample");
 
     if (!glfwInit()) {
         log_error("Error starting GLFW");
         return 1;
     }
 
-	log_debug("Initialising GLFW");
-	if (!glfwInit()) {
-		log_error("Error starting GLFW");
-		return 1;
-	}
+    WaterExample app;
+    GLFW3Window programWindow;
+    programWindow.SetApplication(&app);
 
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file("config/config.xml");
@@ -54,27 +47,22 @@ int main()
         return 1;
     }
 
-	log_debug("Loading window settings");
-	if (!programWindow.LoadXMLSettings(window)) {
-		log_error("Unable to load window settings");
-		return 1;
-	}
+    MediaManager::GetInstance().getMediaPathManager().loadXMLSettings(doc.child("Config"));
 
-	MediaManager::GetInstance().getMediaPathManager().loadXMLSettings(doc.child("Config"));
+    if (!programWindow.Create()) {
+        log_error("Unable to create OpenGL window");
+        programWindow.Destroy();
+        return 1;
+    }
 
-	log_debug("Creating OpenGL window");
-	if (!programWindow.Create()) {
-		log_error("Unable to create OpenGL window");
-		programWindow.Destroy();
-		return 1;
-	}
+    if (!programWindow.Init()) {
+        log_error("Could not initialise GLEW");
+        programWindow.Destroy();
+        return 1;
+    }
 
-	log_debug("Initialising GLEW");
-	if (!programWindow.Init()) {
-		log_error("Could not initialise GLEW");
-		programWindow.Destroy();
-		return 1;
-	}
+    Renderer::GetInstance().GetRendererInformation();
+    Renderer::GetInstance().GetMatrixStack().Initialize();
 
     if (!app.Init()) {
         log_error("Could not initialise application");
@@ -82,39 +70,36 @@ int main()
         return 1;
     }
 
-	log_debug("Initialising application");
-	if (!app.Init()) {
-		log_error("Could not initialise application");
-		programWindow.Destroy();
-		return 1;
-	}
+    Timing& timing = Timing::GetInstance();
+    EventManager& eventManager = EventManager::GetInstance();
 
-	Timing& timing = Timing::GetInstance();
-	EventManager& eventManager = EventManager::GetInstance();
+    timing.Initialize();
+    programWindow.SetInputCallbacks();
+    app.OnResize(programWindow.GetWidth(), programWindow.GetHeight());
 
     while (programWindow.IsRunning()) {
         timing.Update();
         float elapsedTime = static_cast<float> (timing.GetLastFrameDuration());
-
-	while (programWindow.IsRunning()) {
-		timing.Update();
-		float elapsedTime = static_cast<float> (timing.GetLastFrameDuration());
-		eventManager.UpdateAll(1000);
+        eventManager.UpdateAll(17);
+        
+        app.Prepare(elapsedTime);
+        app.Render();
 
         programWindow.SwapBuffers();
         programWindow.ProcessEvents();
     }
 
-    log_info("Stopping application ngengine-waterexample\n");
+    log_info("Stopping application ngengine-waterexample");
 
-    Logger::NewLogger::GetInstance().Flush();
     app.Shutdown();
 
-    MediaManager::getInstance().deinitialize();
+    MediaManager::GetInstance().deinitialize();
     Renderer::GetInstance().GetMatrixStack().Deinitialize();
 
-	MediaManager::GetInstance().deinitialize();
-	Renderer::GetInstance().GetMatrixStack().Deinitialize();
+    programWindow.Destroy();
+
+    log_info("Application stopped\n");
+    Logger::NewLogger::GetInstance().Flush();
 
     return 0;
 }
