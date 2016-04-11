@@ -33,6 +33,8 @@ class WaterExample : public NGE::Windows::Application
     void OnKeyPressed(NGE::Events::KeyboardEvent& event);
     void OnMouse(NGE::Events::MouseEvent& event);
     void OnMouseDrag(int x, int y);
+    
+    void MouseListener(IEventDataPtr event);
 
   private:
     static const int waterPlaneLength = 256;
