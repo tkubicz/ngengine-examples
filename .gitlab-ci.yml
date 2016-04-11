@@ -10,8 +10,8 @@ before_script:
   - currentdir=`pwd`
   - cd ../
   - git clone git@gitlab.com:lynxware/ngengine.git
-  - git submodules init
-  - git submodules update
+  - git submodule init
+  - git submodule update
   - cd $currentdir
 
 build:
