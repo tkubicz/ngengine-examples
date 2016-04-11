@@ -8,8 +8,7 @@ before_script:
   - echo -e $SSH_KEY_NGENGINE > ~/.ssh/id_rsa
   - echo -e "Host gitlab.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
   - git clone git@gitlab.com:lynxware/ngengine.git ../ngengine
-  - git submodule init ../ngengine
-  - git submodule update ../ngengine
+  - pwd
 
 build:
   stage: build
