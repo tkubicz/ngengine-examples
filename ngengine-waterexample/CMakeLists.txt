@@ -1,9 +1,14 @@
 cmake_minimum_required(VERSION 2.8)
 project (nge-waterexample)
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-    add_definitions(-g -std=c++11 -pthread -Wall)
+# Set the current build profile.
+if (NOT CMAKE_BUILD_TYPE)
+    set (CMAKE_BUILD_TYPE Debug)
 endif()
+
+# Specify the compilation flags for different build types.
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -std=c++11 -DUSE_GLFW -g -Wall")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -std=c++11 -DUSE_GLFW -O3 -Wall")
 
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/src")
