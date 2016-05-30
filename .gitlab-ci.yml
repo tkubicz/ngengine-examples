@@ -7,17 +7,21 @@ before_script:
   - rm -rf ../ngengine
   - echo -e $SSH_KEY_NGENGINE > ~/.ssh/id_rsa
   - echo -e "Host gitlab.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
-#  - currentdir=`pwd`
-#  - cd ../
   - git clone --recursive git@gitlab.com:lynxware/ngengine.git ../ngengine
-#  - cd ngengine/
-#  - git submodule init
-#  - git submodule update
-#  - cd $currentdir
 
-build:
+ngengine-waterexample:
   stage: build
   script:
+    - cd ngengine-waterexample/
+    - mkdir build/
+    - cd build
+    - cmake ..
+    - make -j 4
+
+ngengine-blank:
+  stage: build
+  script:
+    - cd ngengine-blank/
     - mkdir build/
     - cd build
     - cmake ..

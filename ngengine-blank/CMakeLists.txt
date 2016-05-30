@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project (nge-waterexample)
+project (nge-blank)
 
 # Set the current build profile.
 if (NOT CMAKE_BUILD_TYPE)
@@ -35,12 +35,8 @@ set (EXTRA_LIBS ${EXTRA_LIBS} lua5.2)
 set (EXTRA_LIBS ${EXTRA_LIBS} cppformat)
 
 # Add the executables
-add_executable(nge-waterexample 
-	src/Background.cpp
-	src/WaterExample.cpp
-	src/WaterTexture.cpp
-	src/main.cpp)
+add_executable(${PROJECT_NAME} src/BlankExample.cpp src/main.cpp)
 
-target_link_libraries(nge-waterexample ${EXTRA_LIBS})
+target_link_libraries(${PROJECT_NAME} ${EXTRA_LIBS})
 
-install (TARGETS nge-waterexample DESTINATION bin)
+install (TARGETS ${PROJECT_NAME} DESTINATION bin)
