@@ -18,6 +18,15 @@ ngengine-waterexample:
     - cmake ..
     - make -j 4
 
+ngengine-colored-triangle:
+  stage: build
+  script:
+    - cd ngengine-colored-triangle/
+    - mkdir build/
+    - cd build
+    - cmake ..
+    - make -j 4
+
 ngengine-blank:
   stage: build
   script:
