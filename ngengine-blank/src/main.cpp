@@ -27,9 +27,10 @@ int main()
 {
 	Logger::NewLogger& log = Logger::NewLogger::GetInstance();
 	log["console"]->SetAutoFlushEnabled(true);
-	log["console"]->SetFlushAfter(10);
+	log["console"]->SetFlushAfter(1);
+	log["console"]->SetLogLevel(Logger::LogTypes::LOG_LEVEL::DEBUG);
 
-	log_info("Starting application {}", EXAMPLE_NAME);
+	log_info("Starting application: '{}'", EXAMPLE_NAME);
 
 	if (!glfwInit()) {
 		log_error("Error starting GLFW");
@@ -97,7 +98,7 @@ int main()
 		programWindow.ProcessEvents();
 	}
 
-	log_info("Stopping application {}", EXAMPLE_NAME);
+	log_info("Stopping application: '{}'", EXAMPLE_NAME);
 
 	app.Shutdown();
 
@@ -106,7 +107,7 @@ int main()
 
 	programWindow.Destroy();
 
-	log_info("Application stopped\n");
+	log_info("Application stopped: '{}'", EXAMPLE_NAME);
 	Logger::NewLogger::GetInstance().Flush();
 
 	return 0;

@@ -6,40 +6,30 @@
  */
 
 #ifndef BLANKEXAMPLE_H
-#define	BLANKEXAMPLE_H
+#define BLANKEXAMPLE_H
 
 #include <NGE/Windows/Application.hpp>
-#include <NGE/Rendering/Camera/Camera.hpp>
-#include <NGE/Geometry/Basic/Floor.hpp>
-#include <NGE/Geometry/Basic/Sphere.hpp>
-#include <NGE/Events/IEventData.hpp>
 
 using namespace NGE;
 
-class BlankExample : public NGE::Windows::Application
-{
+class BlankExample : public NGE::Windows::Application {
   public:
-    BlankExample();
-    ~BlankExample();
 
-    bool Init();
-    void Prepare(float dt);
-    void Render();
-    void Shutdown();
-    
-    virtual void OnResize(int width, int height);
+	BlankExample() { }
+	~BlankExample() { }
 
-    void OnKeyPressed(NGE::Events::KeyboardEvent& event);
-    void OnMouse(NGE::Events::MouseEvent& event);
-    void OnMouseDrag(int x, int y);
-    
-    void MouseListener(NGE::Events::IEventDataPtr event);
+	bool Init() override;
 
-  private:
+	void Prepare(float dt) override { }
+	void Render() override;
+	void Shutdown() override;
 
-    NGE::Rendering::Camera::Camera camera;
-    NGE::Geometry::Basic::Floor floor;
+	virtual void OnResize(int width, int height) override;
+
+	void OnKeyPressed(NGE::Events::KeyboardEvent& event) override { }
+	void OnMouse(NGE::Events::MouseEvent& event) override { }
+	void OnMouseDrag(int x, int y) override { }
 };
 
-#endif	/* BLANKEXAMPLE_H */
+#endif /* BLANKEXAMPLE_H */
 

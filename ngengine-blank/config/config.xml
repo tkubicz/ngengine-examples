@@ -4,6 +4,4 @@
         fullscreen="false" vsync="false" fsaa="4" 
         opengl_major="3" opengl_minor="0" />
 <Config>
-    <MediaPath type="shader" path="shaders/" />
-    <MediaPath type="texture" path="data/textures/water/" />
 </Config>
