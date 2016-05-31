@@ -1,0 +1,30 @@
+<Shader name="shader" autoinit="true" autobind="true">
+	<VertexShader>
+		<Attrib name="vVertex" type="vec3" index="0" />
+		<Attrib name="vColor" type="vec3" index="1" />
+		<Raw>
+			#version 330 core
+			layout(location = 0) in vec3 vVertex;
+			layout(location = 1) in vec3 vColor;
+			smooth out vec4 vSmoothColor;
+			
+			uniform mat4 MVP;
+			
+			void main() {
+				vSmoothColor = vec4(vColor, 1);
+				gl_Position = MVP * vec4(vVertex, 1);
+			}
+		</Raw>
+	</VertexShader>
+	<FragmentShader>
+		<Raw>
+			#version 330 core
+			smooth in vec4 vSmoothColor;
+			layout(location = 0) out vec4 vFragColor;
+			
+			void main() {
+				vFragColor = vSmoothColor;
+			}
+		</Raw>
+	</FragmentShader>
+</Shader>
