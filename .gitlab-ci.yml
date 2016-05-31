@@ -27,6 +27,15 @@ ngengine-colored-triangle:
     - cmake ..
     - make -j 4
 
+ngengine-ripple-deformation:
+  stage: build
+  script:
+    - cd ngengine-ripple-deformation/
+    - mkdir build/
+    - cd build
+    - cmake ..
+    - make -j 4
+
 ngengine-blank:
   stage: build
   script:
