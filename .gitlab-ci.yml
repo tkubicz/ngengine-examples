@@ -36,6 +36,15 @@ ngengine-ripple-deformation:
     - cmake ..
     - make -j 4
 
+ngengine-subdivision-geometry:
+  stage: build
+  script:
+    - cd ngengine-subdivision-geometry/
+    - mkdir build/
+    - cd build
+    - cmake ..
+    - make -j 4
+
 ngengine-blank:
   stage: build
   script:
