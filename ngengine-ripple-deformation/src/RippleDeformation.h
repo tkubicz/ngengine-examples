@@ -33,7 +33,7 @@ class RippleDeformation : public NGE::Windows::Application {
 
 	void OnMouse(NGE::Events::MouseEvent& event) override;
 
-	void OnMouseDrag(int x, int y) override { }
+	void OnMouseDrag(int x, int y) override;
 
   private:
 	void CreateTopology();
@@ -80,6 +80,7 @@ class RippleDeformation : public NGE::Windows::Application {
 	Math::mat4f P;
 	Math::mat4f MV;
 
+	float elapsedTime = 0;
 	float time = 0;
 
 	Media::Shaders::GLSLProgram* shader;

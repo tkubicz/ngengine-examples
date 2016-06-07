@@ -19,39 +19,36 @@ bool RippleDeformation::Init() {
 	CreateTopology();
 	CreateBufferObjects();
 
-	//glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
-	
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	shader->bindShader();
 
 	return true;
 }
 
 void RippleDeformation::Prepare(float dt) {
-	time = dt * 1000;
+	elapsedTime += dt;
+	time = elapsedTime * SPEED;
 }
 
 void RippleDeformation::Render() {
 	Rendering::Renderer::GetInstance().ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	Rendering::Renderer::GetInstance().ClearBuffers();
-	Rendering::Renderer::GetInstance().GetMatrixStack().Identity();
 
 	Math::mat4f T, Rx, MV, MVP;
 	T.Translate(0, 0, dist);
-	Rx = T;
 	Rx.RotateX(rX);
-	MV = Rx;
 	MV.RotateY(rY);
-	MVP = P * MV;
 
-	shader->bindShader();
+	MVP = P * (T * Rx * MV);
+
 	shader->sendUniform4x4("MVP", &MVP[0], false);
 	shader->sendUniform("time", time);
 	glDrawElements(GL_TRIANGLES, TOTAL_INDICES, GL_UNSIGNED_SHORT, 0);
-	shader->unbindShader();
 }
 
 void RippleDeformation::Shutdown() {
+	shader->unbindShader();
 	shader->unload();
 
 	glDeleteBuffers(1, &vboVerticesID);
@@ -61,19 +58,34 @@ void RippleDeformation::Shutdown() {
 
 void RippleDeformation::OnResize(int width, int height) {
 	Application::OnResize(width, height);
-
 	P.SetPerspectiveProjection(45.f, float(width) / float(height), 1.f, 1000.f);
 }
 
 void RippleDeformation::OnMouse(NGE::Events::MouseEvent& event) {
+	if (event.GetButtonId() == BUTTON2) {
+		state = 0;
+	} else {
+		state = 1;
+	}
+
+	if (state == 0) {
+		dist *= (1 + (event.GetY() - oldY) / 60.0f);
+	} else {
+		rY += (event.GetX() - oldX) / 22.0f;
+		rX += (event.GetY() - oldY) / 22.0f;
+	}
+	oldX = event.GetX();
+	oldY = event.GetY();
 }
 
+void RippleDeformation::OnMouseDrag(int x, int y) {
+}
 
 void RippleDeformation::CreateTopology() {
 	// Setup plane geometry.
 	int count = 0, i = 0, j = 0;
-	for (j = 0; j < NUM_Z; ++j) {
-		for (i = 0; i < NUM_X; ++i) {
+	for (j = 0; j <= NUM_Z; j++) {
+		for (i = 0; i <= NUM_X; i++) {
 			vertices[count++] = Math::vec3f(((float(i) / (NUM_X - 1)) * 2 - 1) * HALF_SIZE_X, 0, ((float(j) / (NUM_Z - 1)) * 2 - 1) * HALF_SIZE_Z);
 		}
 	}
