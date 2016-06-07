@@ -200,7 +200,7 @@ void WaterExample::RenderWater() {
     waveDirections[3].x = -0.2f;
     waveDirections[3].z = -0.1f;
 
-    waterShader->bindShader();
+    waterShader->BindShader();
 
     waterShader->sendUniform4x4("projectionMatrix", Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(PROJECTION_MATRIX));
     waterShader->sendUniform4x4("viewMatrix", Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(MODELVIEW_MATRIX));

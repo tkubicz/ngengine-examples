@@ -40,12 +40,12 @@ bool Background::Initialize(int slices, float radius) {
     this->texture = getTextureEvent->GetTexture();
 
     //Bind cubemap to the shader.
-    shader->bindShader();
+    shader->BindShader();
     {
         texture->activate(0);
         shader->sendUniform("u_cubemap", 0);
     }
-    shader->unbindShader();
+    shader->UnbindShader();
 
     return true;
 }
@@ -58,7 +58,7 @@ void Background::Render() {
     // we want to see the back of it.
     glFrontFace(GL_CW);
 
-    shader->bindShader();
+    shader->BindShader();
     {
         // Send modelview and projection matrix to the shader.
         shader->sendUniform4x4("modelviewMatrix", NGE::Rendering::Renderer::GetInstance().GetMatrixStack().GetMatrix(NGE::MODELVIEW_MATRIX));
@@ -75,6 +75,6 @@ void Background::Render() {
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
-    shader->unbindShader();
+    shader->UnbindShader();
 }
 

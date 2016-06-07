@@ -55,12 +55,12 @@ bool ColoredTriangleExample::Init() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof (vertices), &vertices[0], GL_STATIC_DRAW);
 	check_gl_error();
 
-	glEnableVertexAttribArray(shader->getAttribLocation("vVertex"));
-	glVertexAttribPointer(shader->getAttribLocation("vVertex"), 3, GL_FLOAT, GL_FALSE, stride, 0);
+	glEnableVertexAttribArray(shader->GetAttribLocation("vVertex"));
+	glVertexAttribPointer(shader->GetAttribLocation("vVertex"), 3, GL_FLOAT, GL_FALSE, stride, 0);
 	check_gl_error();
 
-	glEnableVertexAttribArray(shader->getAttribLocation("vColor"));
-	glVertexAttribPointer(shader->getAttribLocation("vColor"), 3, GL_FLOAT, GL_FALSE, stride, (const GLfloat*) offsetof(Vertex, color));
+	glEnableVertexAttribArray(shader->GetAttribLocation("vColor"));
+	glVertexAttribPointer(shader->GetAttribLocation("vColor"), 3, GL_FLOAT, GL_FALSE, stride, (const GLfloat*) offsetof(Vertex, color));
 	check_gl_error();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboIndicesID);
@@ -75,10 +75,10 @@ void ColoredTriangleExample::Render() {
 	Rendering::Renderer::GetInstance().ClearBuffers();
 	Rendering::Renderer::GetInstance().GetMatrixStack().Identity();
 
-	shader->bindShader();
+	shader->BindShader();
 	shader->sendUniform4x4("MVP", &(projectionMatrix * modelViewMatrix)[0], false);
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
-	shader->unbindShader();
+	shader->UnbindShader();
 }
 
 void ColoredTriangleExample::Shutdown() {

@@ -170,7 +170,7 @@ void WaterTexture::Render()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    shader->bindShader();
+    shader->BindShader();
     
     NGE::Math::mat4f modelviewMatrix;
     modelviewMatrix.LookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);

@@ -21,7 +21,7 @@ bool RippleDeformation::Init() {
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	shader->bindShader();
+	shader->BindShader();
 
 	return true;
 }
@@ -48,8 +48,8 @@ void RippleDeformation::Render() {
 }
 
 void RippleDeformation::Shutdown() {
-	shader->unbindShader();
-	shader->unload();
+	shader->UnbindShader();
+	shader->Terminate();
 
 	glDeleteBuffers(1, &vboVerticesID);
 	glDeleteBuffers(1, &vboIndicesID);
@@ -129,8 +129,8 @@ void RippleDeformation::CreateBufferObjects() {
 
 		check_gl_error();
 
-		glEnableVertexAttribArray(shader->getAttribLocation("vVertex"));
-		glVertexAttribPointer(shader->getAttribLocation("vVertex"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(shader->GetAttribLocation("vVertex"));
+		glVertexAttribPointer(shader->GetAttribLocation("vVertex"), 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 		check_gl_error();
 
