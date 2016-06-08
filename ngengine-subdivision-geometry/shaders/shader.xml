@@ -6,7 +6,7 @@
 			layout(location = 0) in vec3 vVertex;
 		
 			void main() {
-				gl_Position = vec4(vVertex, 1);
+			gl_Position = vec4(vVertex, 1);
 			}
 		</Raw>
 	</VertexShader>
@@ -56,7 +56,7 @@
 			layout(location = 0) out vec4 vFragColor;
 		
 			void main() {
-				vFragColor = vec4(1, 1, 1, 1);
+			vFragColor = vec4(1, 1, 1, 1);
 			}
 		</Raw>
 	</FragmentShader>

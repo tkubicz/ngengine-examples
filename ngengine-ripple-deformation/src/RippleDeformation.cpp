@@ -7,7 +7,12 @@
 bool RippleDeformation::Init() {
 	Media::Shaders::ShaderManager& shaderManager = Media::Shaders::ShaderManager::GetInstance();
 
+	check_gl_error();
+
 	shaderManager.LoadProgram("shader", "shader.xml");
+
+	check_gl_error();
+
 	shader = shaderManager.GetProgram("shader");
 	if (shader == nullptr) {
 		log_error("Could not load shader");
