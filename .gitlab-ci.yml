@@ -54,6 +54,15 @@ ngengine-subdivision-geometry-instanced:
     - cmake ..
     - make -j 4
 
+ngengine-simple-image-loader:
+  stage: build
+  script:
+    - cd ngengine-simple-image-loader/
+    - mkdir build/
+    - cd build
+    - cmake ..
+    - make -j 4  
+
 ngengine-blank:
   stage: build
   script:
