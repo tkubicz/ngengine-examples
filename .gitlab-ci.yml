@@ -45,6 +45,15 @@ ngengine-subdivision-geometry:
     - cmake ..
     - make -j 4
 
+ngengine-subdivision-geometry-instanced:
+  stage: build
+  script:
+    - cd ngengine-subdivision-geometry-instanced/
+    - mkdir build/
+    - cd build
+    - cmake ..
+    - make -j 4
+
 ngengine-blank:
   stage: build
   script:
