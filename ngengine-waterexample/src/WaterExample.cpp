@@ -32,7 +32,7 @@ bool WaterExample::Init() {
 
     waterTexture.SetShader(Media::MediaManager::GetInstance().GetShaderManager().GetProgram("waterTextureShader"));
     unsigned int waterTextureId = waterTexture.Initialise((float) waterPlaneLength);
-    tex.setID(waterTextureId);
+    tex.SetID(waterTextureId);
     waterTexture.Resize(this->GetWindow()->GetWidth(), this->GetWindow()->GetHeight());
 
     glEnable(GL_DEPTH_TEST);
@@ -216,10 +216,10 @@ void WaterExample::RenderWater() {
     waterShader->sendUniformArray4("waveParameters", 4 * numberWaves, (GLfloat*) waveParameters);
     waterShader->sendUniformArray2("waveDirections", 2 * numberWaves, (GLfloat*) waveDirections);
 
-    Media::MediaManager::GetInstance().GetTextureManager().GetTexture("backgroundCubemap")->activate(0);
+    Media::MediaManager::GetInstance().GetTextureManager().GetTexture("backgroundCubemap")->Activate(0);
     waterShader->sendUniform("cubemap", 0);
 
-    tex.activate(1);
+    tex.Activate(1);
     waterShader->sendUniform("waterTexture", 1);
 
     waterShader->sendUniform("cameraPos", camera.GetViewerPosition());

@@ -42,7 +42,7 @@ bool Background::Initialize(int slices, float radius) {
     //Bind cubemap to the shader.
     shader->BindShader();
     {
-        texture->activate(0);
+        texture->Activate(0);
         shader->sendUniform("u_cubemap", 0);
     }
     shader->UnbindShader();
