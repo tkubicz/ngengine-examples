@@ -26,6 +26,8 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../../ngengine/thirdparty/cppfo
 
 add_subdirectory (${CMAKE_CURRENT_SOURCE_DIR}/../../ngengine subproject/nge)
 
+find_package(PNG REQUIRED)
+
 set (CMAKE_INSTALL_PREFIX "../install")
 
 set (EXTRA_LIBS ${EXTRA_LIBS} nge)

@@ -1,24 +1,39 @@
 #include "SimpleImageLoader.h"
 #include <NGE/Core/Core.hpp>
+#include <NGE/Events/EventManager.hpp>
 #include <NGE/Rendering/Rendering.hpp>
-#include <NGE/Media/Images/PngImage.hpp>
+#include <NGE/Media/Images/TextureManager.hpp>
 #include <NGE/Media/Images/LoadTextureEvent.hpp>
+#include <NGE/Media/Images/GetTextureEvent.hpp>
 
+namespace e = NGE::Events;
 namespace i = NGE::Media::Images;
 
 bool SimpleImageLoader::Init() {
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	e::EventManager& eventManager = e::EventManager::GetInstance();
+	i::TextureManager& textureManager = i::TextureManager::GetInstance();
+	textureManager.Initialise();
 
-	NGE::Media::Images::PngImage pngImage;
+	std::string imageName = "Lenna";
 
-	if (!pngImage.load("images/Lenna.png")) {
-		log_error("Could not load image");
+	pugi::xml_document doc;
+	auto result = doc.load_file("config/image.xml");
+	if (!result) {
+		log_error("Could not load image description");
 		return false;
-	} else {
-		log_debug("Image loaded");
 	}
-	
+	auto imageNode = doc.child("Texture2D");
+
+	auto loadEvent = std::make_shared<i::LoadTextureEvent>(imageNode);
+	auto getEvent = std::make_shared<i::GetTextureEvent>(imageName);
+
+	eventManager.TriggerEvent(loadEvent);
+	eventManager.TriggerEvent(getEvent);
+
+	if (!getEvent->IsSuccessful()) {
+		log_error("Could not get '{}' image", imageName);
+		return false;
+	}
 
 	return true;
 }
