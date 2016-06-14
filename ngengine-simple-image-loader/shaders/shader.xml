@@ -1,0 +1,41 @@
+<Shader name="shader" autoinit="true" autobind="true">
+	<VertexShader>
+		<Attrib name="vVertex" type="vec2" index="0" />
+		<Raw>
+			#version 330 core
+			
+			// Object space vertex
+			layout(location=0) in vec2 vVertex;
+			
+			// Texture coordinates for texture lookup in the fragment shader
+			smooth out vec2 vUV;
+			
+			void main() {
+				// Output the clipspace position
+				gl_Position = vec4(vVertex * 2.0 -1, 0, 1);
+			
+				// Set the input object space vertex position as texture coordinate
+				vUV = vVertex;
+			}
+		</Raw>
+	</VertexShader>
+	<FragmentShader>
+		<Raw>
+			#version 330 core
+			
+			// Fragment shader output
+			layout(location=0) out vec4 vFragColor;
+			
+			// 2D texture coordinates
+			smooth in vec2 vUV;
+			
+			// The image to display
+			uniform sampler2D textureMap;
+			
+			void main() {
+				// Sample the textureMap at the given 2D texture coordinates to obtain the colour
+				vFragColor = texture(textureMap, vUV);
+			}
+		</Raw>
+	</FragmentShader>
+</Shader>

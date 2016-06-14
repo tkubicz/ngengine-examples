@@ -1,1 +1,5 @@
-<Texture2D name="Lenna" type="png" file="Lenna.png" />
+<Texture2D name="Lenna" type="png" file="Lenna.png">
+	<Wrap s="LINEAR" t="LINEAR" />
+	<Filter min="CLAMP_TO_EDGE" mag="CLAMP_TO_EDGE" />
+	<Format internal="RGB" format="RGB" />
+</Texture2D>

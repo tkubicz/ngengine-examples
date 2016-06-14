@@ -1,5 +1,5 @@
 <Window name="NGEngine Alpha v0.1 Simple Image Loader Example" 
-		width="800" height="600" x="0" y="0"
+		width="512" height="512" x="0" y="0"
         redbits="8" greenbits="8" bluebits="8" alphabits="8" depthbits="8" stencilbits="8"
         fullscreen="false" vsync="false" fsaa="4" 
         opengl_major="3" opengl_minor="3" />
