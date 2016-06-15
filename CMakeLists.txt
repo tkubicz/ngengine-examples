@@ -2,6 +2,9 @@ cmake_minimum_required (VERSION 3.0)
 
 project(nge-examples)
 
+# Do not build tests by default
+set (BUILD_TESTS false)
+
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../ngengine ngengine)
 
 add_subdirectory(ngengine-blank)
