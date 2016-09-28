@@ -9,6 +9,10 @@ bool FreeCamera::Init() {
 	return true;
 }
 
+void FreeCamera::Prepare(float dt) {
+	
+}
+
 void FreeCamera::Render() {
 	Rendering::Renderer::GetInstance().ClearColor(0.9f, 0.95f, 1.0f, 1.0f);
 	Rendering::Renderer::GetInstance().ClearBuffers();

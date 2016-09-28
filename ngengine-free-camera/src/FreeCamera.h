@@ -20,7 +20,7 @@ class FreeCamera : public NGE::Windows::Application {
 
 	bool Init() override;
 
-	void Prepare(float dt) override { }
+	void Prepare(float dt) override;
 	void Render() override;
 	void Shutdown() override;
 
