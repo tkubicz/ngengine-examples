@@ -7,7 +7,7 @@
 #include <NGE/Media/MediaManager.hpp>
 #include <NGE/Events/EventManager.hpp>
 
-#include "FreeCamera.h"
+#include "FreeCameraExample.h"
 
 using namespace NGE::Tools;
 using namespace NGE::Windows;
@@ -37,7 +37,7 @@ int main()
 		return 1;
 	}
 
-	FreeCamera app;
+	FreeCameraExample app;
 	GLFW3Window programWindow;
 	programWindow.SetApplication(&app);
 
