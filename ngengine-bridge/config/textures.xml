@@ -1,0 +1,5 @@
+<Texture2D name="wood" type="tga" file="wood.tga" mipmap="true">
+    <Wrap s="REPEAT" t="REPEAT"/>
+    <Filter min="LINEAR_MIPMAP_LINEAR" mag="LINEAR"/>
+    <Format internal="RGB" format="RGB" />
+</Texture2D>

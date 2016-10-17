@@ -1,0 +1,193 @@
+<Shader name="basicShader" autoinit="true" autobind="true">
+    <VertexShader>
+        <Uniform name="modelview_matrix" type="mat4f"/>
+        <Uniform name="projection_matrix" type="mat4f"/>
+        <Attrib name="a_Vertex" type="vec3" index="0"/>
+        <Attrib name="a_TexCoord0" type="vec2" index="1"/>
+
+        <Raw>
+            #version 130
+
+            uniform mat4 projection_matrix;
+            uniform mat4 modelview_matrix;
+            in vec3 a_Vertex;
+            in vec2 a_TexCoord0;
+            out vec2 texCoord0;
+
+            void main(void)
+            {
+            vec4 pos = modelview_matrix * vec4(a_Vertex, 1.0);
+            texCoord0 = a_TexCoord0;
+            gl_Position = projection_matrix * pos;
+            }
+
+        </Raw>
+    </VertexShader>
+    <GeometryShader/>
+    <FragmentShader>
+        <Uniform name="texture0" type="sampler2D"/>
+        <Raw>
+            #version 130
+
+            precision highp float;
+
+            uniform sampler2D texture0;
+            in vec2 texCoord0;
+            out vec4 outColor;
+
+            void main(void) {
+            outColor = texture(texture0, texCoord0.st);
+            }
+
+        </Raw>
+    </FragmentShader>
+</Shader>
+<Shader name="bridgeShader" autoinit="true" autobind="true">
+<VertexShader>
+    <Uniform name="modelview_matrix" type="mat4f"/>
+    <Uniform name="projection_matrix" type="mat4f"/>
+    <Attrib name="a_Vertex" type="vec3" index="0"/>
+    <Attrib name="a_Color" type="vec3" index="1"/>
+
+    <Raw>
+        #version 130
+
+        uniform mat4 modelview_matrix;
+        uniform mat4 projection_matrix;
+
+        in vec3 a_Vertex;
+        in vec3 a_Color;
+        //in vec2 a_TexCoord0;
+        out vec4 color;
+        //out vec2 texCoord0;
+
+        void main(void)
+        {
+        vec4 pos = modelview_matrix * vec4(a_Vertex, 1.0);
+        gl_Position = projection_matrix * pos;
+        //texCoord0 = a_TexCoord0;
+        color = vec4(a_Color, 1.0);
+        }
+    </Raw>
+</VertexShader>
+<GeometryShader/>
+<FragmentShader>
+    <Uniform name="texture0" type="sampler2D"/>
+    <Raw>
+        #version 130
+
+        precision highp float;
+
+        uniform sampler2D texture0;
+        in vec4 color;
+        //in vec2 texCoord0;
+        out vec4 outColor;
+
+        void main(void)
+        {
+        outColor = color;
+        //outColor = color * texture(texture0, texCoord0.st);
+        }
+    </Raw>
+</FragmentShader>
+</Shader>
+<Shader name="fontShader" autoinit="true" autobind="true">
+<VertexShader>
+    <Uniform name="modelview_matrix" type="mat4f"/>
+    <Uniform name="projection_matrix" type="mat4f"/>
+    <Attrib name="a_Vertex" type="vec2" index="0"/>
+    <Attrib name="a_TexCoord0" type="vec2" index="1"/>
+    <Raw>
+        #version 130
+
+        uniform mat4 modelview_matrix;
+        uniform mat4 projection_matrix;
+
+        in vec2 a_Vertex;
+        in vec2 a_TexCoord0;
+        out vec2 texCoord0;
+
+        void main(void) {
+        texCoord0 = a_TexCoord0;
+        vec4 pos = modelview_matrix * vec4(a_Vertex, 0.0, 1.0);
+        gl_Position = projection_matrix * pos;
+        }
+
+    </Raw>
+</VertexShader>
+<GeometryShader/>
+<FragmentShader>
+    <Uniform name="texture0" type="sampler2D"/>
+    <Uniform name="color" type="vec4"/>
+    <Raw>
+        #version 130
+
+        precision highp float;
+
+        uniform sampler2D texture0;
+        uniform vec4 color;
+        in vec2 texCoord0;
+
+        void main(void) {
+        vec4 textureColor = texture2D(texture0, texCoord0.st);
+        if (textureColor.rgb == vec3(0.0, 0.0, 0.0)) {
+        discard;
+        }
+        vec4 outColor = color * texture2D(texture0, texCoord0.st);
+        gl_FragColor = outColor;
+        }
+    </Raw>
+</FragmentShader>
+</Shader>
+<Shader name="guiShader" autoinit="true" autobind="true">
+<VertexShader>
+    <Uniform name="modelview_matrix" type="mat4f"/>
+    <Uniform name="projection_matrix" type="mat4f"/>
+    <Attrib name="a_Vertex" type="vec2" index="0"/>
+    <Attrib name="a_Color" type="vec4" index="1"/>
+    <Attrib name="a_TexCoord0" type="vec2" index="2"/>
+    <Raw>
+        #version 130
+
+        uniform mat4 modelview_matrix;
+        uniform mat4 projection_matrix;
+
+        in vec2 a_Vertex;
+        in vec4 a_Color;
+        in vec2 a_TexCoord0;
+
+        out vec4 color;
+        out vec2 texCoord0;
+
+        void main(void)
+        {
+        vec4 pos = modelview_matrix * vec4(a_Vertex, 0.0, 1.0);
+        color = a_Color;
+        texCoord0 = a_TexCoord0;
+        gl_Position = projection_matrix * pos;
+        }
+    </Raw>
+</VertexShader>
+<GeometryShader/>
+<FragmentShader>
+    <Uniform name="texture0" type="sampler2D"/>
+    <Raw>
+        #version 130
+        precision highp float;
+
+        uniform sampler2D texture0;
+
+        in vec4 color;
+        in vec2 texCoord0;
+        out vec4 outColor;
+
+        void main(void)
+        {
+        if (texCoord0 == vec2(0,0))
+        outColor = color;
+        else
+        outColor = color * texture(texture0, texCoord0.st);
+        }
+    </Raw>
+</FragmentShader>
+</Shader>
