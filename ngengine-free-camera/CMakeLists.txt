@@ -34,7 +34,7 @@ set (EXTRA_LIBS ${EXTRA_LIBS} lua5.2)
 set (EXTRA_LIBS ${EXTRA_LIBS} cppformat)
 
 # Add the executables
-add_executable(${PROJECT_NAME} src/FreeCamera.cpp src/main.cpp)
+add_executable(${PROJECT_NAME} src/FreeCameraExample.cpp src/main.cpp)
 
 target_link_libraries(${PROJECT_NAME} ${EXTRA_LIBS})
 
