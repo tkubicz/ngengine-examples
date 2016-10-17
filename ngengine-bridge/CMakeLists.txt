@@ -25,9 +25,9 @@ if ("${PROJECT_NAME}" STREQUAL "${CMAKE_PROJECT_NAME}")
 	add_subdirectory (${CMAKE_CURRENT_SOURCE_DIR}/../../ngengine ngengine)
 endif()
 
-find_package(Freetype REQUIRED)
-include_directories("${FREETYPE_INCLUDE_DIRS}")
-message(STATUS "Freetype: " ${FREETYPE_INCLUDE_DIRS})
+#find_package(Freetype REQUIRED)
+#include_directories("${FREETYPE_INCLUDE_DIRS}")
+#message(STATUS "Freetype: " ${FREETYPE_INCLUDE_DIRS})
 
 set (CMAKE_INSTALL_PREFIX "../install")
 
@@ -39,7 +39,7 @@ set (EXTRA_LIBS ${EXTRA_LIBS} glfw)
 set (EXTRA_LIBS ${EXTRA_LIBS} z)
 set (EXTRA_LIBS ${EXTRA_LIBS} lua5.2)
 set (EXTRA_LIBS ${EXTRA_LIBS} cppformat)
-set (EXTRA_LIBS ${EXTRA_LIBS} freetype)
+#set (EXTRA_LIBS ${EXTRA_LIBS} freetype)
 
 # Add the executables
 add_executable(${PROJECT_NAME} src/BridgeExample.cpp src/main.cpp)

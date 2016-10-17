@@ -32,6 +32,12 @@ bool BridgeExample::Init() {
 	pugi::xml_parse_result textureResult = textureInfo.load_file("config/textures.xml");
 	pugi::xml_node currentTexture = textureInfo.child("Texture2D");
 
+    int* maxWidth = new int;
+    int* maxheight = new int;
+    window->GetMaxResolution(maxWidth, maxheight);
+    log_info("Max resolution: {}/{}", *maxWidth, *maxheight);
+    delete maxWidth;
+    delete maxheight;
 
 	if (!Media::MediaManager::GetInstance().GetTextureManager().LoadTexture(currentTexture)) {
 		log_error("Could not load texture");
