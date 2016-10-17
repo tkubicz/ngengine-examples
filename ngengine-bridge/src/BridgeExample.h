@@ -12,11 +12,10 @@
 #include <NGE/Media/Shaders/GLSLProgram.hpp>
 #include <NGE/Rendering/Camera/Camera.hpp>
 #include <NGE/Events/GUIEventListener.hpp>
-#include <NGE/Media/Images/Texture.hpp>
 #include <NGE/Media//Shaders/GLSLProgram.hpp>
 #include <NGE/Physics/MassAggregate/ParticleWorld.hpp>
-#include <NGE/Geometry/Basic/Box.hpp>
 #include <NGE/Geometry/Basic/Sphere.hpp>
+#include <NGE/Geometry/Basic/Floor.hpp>
 
 using namespace NGE;
 
@@ -42,20 +41,9 @@ class BridgeExample : public Windows::Application {
 	Media::Shaders::GLSLProgram* bridgeShader;
 
 	Rendering::Camera::Camera camera;
-
-	Media::Images::Texture iceTexture;
-	Media::Images::Texture* woodTexture;
-	Media::Images::Texture* metalTexture;
-	Media::Images::Texture fontTexture;
-
-	Math::vec2i dims;
-
-	bool mouseLocked;
-
-	GLuint floorVertexBuffer, floorColorBuffer, floorTextureBuffer;
-	std::vector<Math::vec3f> floorVertices;
-	void GenerateFloor();
-	void RenderFloor();
+	
+	Geometry::Basic::Sphere sphere;
+	Geometry::Basic::Floor floor;
 
 	GLuint bridgeVertexBuffer, bridgeColorBuffer;
 	std::vector<Math::vec3f> bridgeVertices;
@@ -68,8 +56,6 @@ class BridgeExample : public Windows::Application {
 	unsigned int particleCount;
 	Physics::MassAggregate::Particle* particleArray;
 	Physics::MassAggregate::GroundContacts groundContactGenerator;
-
-	Geometry::Basic::Sphere sphere;
 
 	Physics::MassAggregate::ParticleCableConstraint* supports;
 	Physics::MassAggregate::ParticleCable *cables;
