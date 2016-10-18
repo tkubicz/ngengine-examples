@@ -1,0 +1,117 @@
+<Shader name="floorShader" autoinit="true" autobind="true">
+	<VertexShader>
+		<Uniform name="modelview_matrix" type="mat4f"/>
+		<Uniform name="projection_matrix" type="mat4f"/>
+		<Attrib name="a_Vertex" type="vec3" index="0"/>
+
+		<Raw>
+			#version 130
+
+			uniform mat4 modelview_matrix;
+			uniform mat4 projection_matrix;
+			in vec3 a_Vertex;
+
+			void main(void)
+			{
+			vec4 pos = modelview_matrix * vec4(a_Vertex, 1.0);
+			gl_Position = projection_matrix * pos;
+			}
+		</Raw>
+	</VertexShader>
+	<GeometryShader/>
+	<FragmentShader>
+		<Uniform name="color" type="vec4"/>
+		<Raw>
+			#version 130
+
+			precision highp float;
+
+			uniform vec4 color;
+
+			void main(void)
+			{
+			gl_FragColor = color;
+			}
+		</Raw>
+	</FragmentShader>
+</Shader>
+<Shader name="basicShader" autoinit="true" autobind="true">
+	<VertexShader>
+		<Uniform name="modelview_matrix" type="mat4f"/>
+		<Uniform name="projection_matrix" type="mat4f"/>
+		<Attrib name="a_Vertex" type="vec3" index="0"/>
+		<Attrib name="a_TexCoord0" type="vec2" index="1"/>
+
+		<Raw>
+			#version 130
+
+			uniform mat4 projection_matrix;
+			uniform mat4 modelview_matrix;
+			in vec3 a_Vertex;
+			in vec2 a_TexCoord0;
+			out vec2 texCoord0;
+
+			void main(void)
+			{
+			vec4 pos = modelview_matrix * vec4(a_Vertex, 1.0);
+			texCoord0 = a_TexCoord0;
+			gl_Position = projection_matrix * pos;
+			}
+
+		</Raw>
+	</VertexShader>
+	<GeometryShader/>
+	<FragmentShader>
+		<Uniform name="texture0" type="sampler2D"/>
+		<Raw>
+			#version 130
+
+			precision highp float;
+
+			uniform sampler2D texture0;
+			in vec2 texCoord0;
+			out vec4 outColor;
+
+			void main(void) {
+			outColor = texture(texture0, texCoord0.st);
+			}
+
+		</Raw>
+	</FragmentShader>
+</Shader>
+<Shader name="solidColorShader" autoinit="true" autobind="true">
+	<VertexShader>
+		<Uniform name="modelview_matrix" type="mat4f" />
+		<Uniform name="projection_matrix" type="mat4f" />
+		<Attrib name="a_Vertex" type="vec3f" index="0" />
+		<Raw>
+			#version 130
+
+			uniform mat4 modelview_matrix;
+			uniform mat4 projection_matrix;
+
+			in vec3 a_Vertex;
+
+			void main(void)
+			{
+				vec4 pos = modelview_matrix * vec4(a_Vertex, 1.0);
+				gl_Position = projection_matrix * pos;
+			}
+		</Raw>
+	</VertexShader>
+	<FragmentShader>
+		<Uniform name="color" type="vec4f" />
+		<Raw>
+			#version 130
+
+			uniform vec4 color;
+
+			out vec4 out_color;
+
+			void main(void)
+			{
+				out_color = color;
+			}
+		</Raw>
+	</FragmentShader>
+</Shader>
